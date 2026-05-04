@@ -1,0 +1,13 @@
+.manage-products{
+    padding: 20px;
+}
+.product-table{
+    width: fit-content;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.product-table th,td{
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
