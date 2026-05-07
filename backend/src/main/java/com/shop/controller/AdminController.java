@@ -1,5 +1,7 @@
 package com.shop.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.modul.Order;
 import com.shop.modul.Product;
@@ -30,20 +34,44 @@ public class AdminController {
 	private OrderService orderService;
 	
 	
-	//Get all product activ and  inactive status for admin
+//---------- Get all product activ and  inactive status for admin
+	
 	@GetMapping("/products")
 	public List<Product> getAllProductForAdmin(){
 		return productService.findAll();
 	}
 	
 	//Add Product
+	
 	@PostMapping("/product")
-	public Product addProduct(@RequestBody Product product) {
-		return productService.addProduct(product);
-	}
-	
+	public Product addProduct(
+			@RequestParam("name") String name,
+			@RequestParam("description") String deacription,
+			@RequestParam("price") double price,
+			@RequestParam("stock") int stock,
+			@RequestParam("file") MultipartFile file
+			) throws IllegalStateException, IOException {
+		
+		        String uploadDir = System.getProperty("user.dir") + "/product-images/";
+		        
+		        File dir = new File(uploadDir);
+		        if(!dir.exists()) dir.mkdirs();
+		        
+		        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+		        file.transferTo(new File(uploadDir + fileName));
+		       
+		        Product product = new Product();
+		        product.setName(name);
+		        product.setDescription(deacription);
+		        product.setPrice(price);
+		        product.setStock(stock);
+		        product.setImageUrl(fileName);
+		       
+		        return productService.addProduct(product);
+		   
+			}
+			
 	//Update product
-	
 	@PutMapping("/product/{id}")
 	public Product updateProduct(@PathVariable Long id, @RequestBody Product product ) {
 		return productService.updateProduct(id, product);

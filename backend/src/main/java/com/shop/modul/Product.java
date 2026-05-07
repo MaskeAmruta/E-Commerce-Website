@@ -13,6 +13,8 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column(nullable=true)
+	private String imageUrl;
 	
 	private String name;
 	private String description;
@@ -64,6 +66,12 @@ public class Product {
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", stock="
 				+ stock + "]";
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	
 	

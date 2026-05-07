@@ -36,12 +36,16 @@ export const API = {
         return handleResponse(res);
     },
 
-    addProduct: async (product) => {
+    addProduct: async (FormData) => {
+
+        const headers ={Authorization:`Bearer ${localStorage.getItem("token")}`};
+
         const res = await fetch(`${BASE_URL}/admin/product`, {
             method: "POST",
-            headers: getAuthHeaders(),
-            body: JSON.stringify(product)
+            headers,
+            body: FormData
         });
+        
         return handleResponse(res);
     },
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/login.css';
+import { toast } from 'react-toastify';
 
 export default function Login({ setRole }) {
     const [user, setUser] = useState({
@@ -34,7 +35,7 @@ export default function Login({ setRole }) {
 
             // ❌ if no token → stop
             if (!data.token) {
-                alert("Login failed");
+                toast.error("Login failed");
                 return;
             }
 
@@ -44,7 +45,7 @@ export default function Login({ setRole }) {
 
             // ❌ if no role → stop
             if (!data.role) {
-                alert("Role not found");
+                toast.error("Role not found");
                 return;
             }
 
@@ -60,14 +61,15 @@ export default function Login({ setRole }) {
             } else if (data.role === "USER") {
                 navigate("/user");
             } else {
-                alert("Unknown role");
+                toast.error("Unknown role");
                 navigate("/");
             }
 
-            alert("Login Successful");
+            toast.success("Login Successful",{
+                            theme: "colored" });
 
         } catch (error) {
-            alert(error.message || "Login failed");
+            toast.error(error.message || "Login failed");
         }
     };
 
@@ -90,8 +92,8 @@ export default function Login({ setRole }) {
           onChange={handleChange}
           required
         />
-        <button type="submit">Login</button>
-        <button className='close-btn' onClick={()=>navigate("/")}>
+        <button type="submit" className='btn'>Login</button>
+        <button type='button' className='btn' onClick={()=>navigate("/")}>
             Cancle
         </button>
       </form>

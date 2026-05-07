@@ -11,6 +11,7 @@ import UserDashboard from './components/UserDashboard';
 import ProtectedRoute from './pages/ProtectedRoute'
 import AddProduct from './pages/admin/AddProduct';
 import ManageProducts from './pages/admin/ManageProducts';
+import { toast, ToastContainer } from 'react-toastify';
 
 function AppContent() {
   const [role, setRole] = useState(localStorage.getItem("role"));
@@ -26,6 +27,7 @@ function AppContent() {
     localStorage.removeItem("role");
     localStorage.removeItem("userId");
     setRole(null);
+    toast.success("Logged out successfully" , {style:{background:"#2b0b0b", color:"#f87171" }})
     navigate("/" );
   };
 
@@ -44,11 +46,11 @@ function AppContent() {
           <>
           <div className="nav-left">
             <Link to="/">Home</Link>
-            <Link to="/cart">Cart</Link>
           </div>
            
            <div className="nav-right">
-                 {!role && <Link to="/login">Login</Link>}
+           
+            {!role && <Link to="/login">Login</Link>}
             {!role && <Link to="/register">Register</Link>}
            </div>
             
@@ -56,9 +58,10 @@ function AppContent() {
 
             {role === "USER" && (
               <>
-                <Link to="/user">Dashboard</Link>
+                
                 <div className="nav-right">
-
+                  <Link to="/cart">Cart</Link>
+                  <Link to="/user">Dashboard</Link>
                   <button onClick={handleLogout}>Logout</button>
                 </div>
                 
@@ -113,6 +116,7 @@ function AppContent() {
           }
         />
       </Routes>
+      <ToastContainer position='top-right' autoClose={1500} pauseOnHover={false} />
     </>
   );
 }

@@ -54,10 +54,10 @@
   transition: 0.3s;
 }
 
-.login-card button:hover {
+.login-card btn:hover {
   background: #2563eb;
 }
-.close-btn{
+.btn{
 
     top: 10px;
     right: 12px;
@@ -68,7 +68,7 @@
     color: #64748b;
     transition: 0.3s;
 }
-.close-btn:hover{
+.btn:hover{
     color: #ef4444;
 }
 
